@@ -60,6 +60,8 @@ stack_horizontally <- function(images) {
 #' @param font_color font color for the link
 #' @param font_size font size for the link
 #' @param font font name or family, e.g. "mono"
+#' @param dynamic_size whether to automatically adjust the watermark size
+#'  depending on the size of the current graphics device
 #'
 #' @return a function which you can pass to enable_knitr(watermark)
 #' @export
@@ -69,8 +71,25 @@ watermark_generator <- function(show_qr=TRUE,
                                 link_bg="#ffffff",
                                 font_color="#000000",
                                 font_size=14,
-                                font="mono") {
+                                font="mono",
+                                dynamic_size=TRUE) {
   function(revision, image) {
+    if(dynamic_size) {
+      if(!is.null(grDevices::dev.list())) {
+        dimensions <- grDevices::dev.size("px")
+        w <- max(dimensions[1], 1920)
+        h <- as.integer(1920.0 * dimensions[2] / dimensions[1])
+
+      } else {
+        w <- 1920
+        h <- 1080
+      }
+
+      qr_size_px <- c(as.integer(w * 0.2), as.integer(w * 0.2))
+      link_size_px <- c(as.integer(w * 0.8), as.integer(h * 0.2))
+      font_size <- as.integer(1.0 * font_size * w / 700)
+    }
+
     url <- file.path(APP_URL, "r", get_api_id(revision))
 
     # Link
@@ -105,6 +124,30 @@ watermark_generator <- function(show_qr=TRUE,
       return(link_img)
     }
   }
+}
+
+
+#' Applies a watermark to a plot object/function.
+#'
+#' @param qr pre-generated QR code, as an image
+#' @param plot_obj plot object
+#'
+#' @return ggplot object with the watermark applied
+#' @export
+ggwatermark <- function(qr, plot_obj) {
+  p <- cowplot::ggdraw()
+
+  if(is_ggplot(plot_obj)) {
+    p <- p + cowplot::draw_plot(plot_obj,
+                                height=0.8, x=0.0, y=0.2)
+  } else {
+    warning("Provided object is not a ggplot. Output will be empty.")
+  }
+
+  p <- p + cowplot::draw_image(qr,
+                               x=0, y=0,
+                               height=0.2)
+  return(p)
 }
 
 #' Draws a watermark with a GoFigr link and a QR code

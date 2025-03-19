@@ -16,7 +16,7 @@ read_prompt <- function(prompt, validate=NULL, attempt=1, max_attempts=2) {
     tryCatch({
       val <- validate(res)
     }, error=function(err) {
-      warning(paste0(err, "\n"))
+      message(paste0(err, "\n"))
       return(read_prompt(prompt, validate=validate, attempt = attempt + 1))
     })
   } else {
@@ -51,8 +51,8 @@ login_with_username <- function(max_attempts) {
         stop("Unknown error occurred.")
       }
     }, error=function(err) {
-      warning(paste0(err, "\n"))
-      warning("Connection failed. Please verify your username & password and try again.\n\n")
+      message(paste0(err, "\n"))
+      message("Connection failed. Please verify your username & password and try again.\n\n")
       attempt <<- attempt + 1
     })
   }
@@ -128,7 +128,10 @@ gfconfig <- function(max_attempts=3) {
     id <<- id + 1
   })
 
-  message(knitr::kable(worx_df))
+  lapply(1:length(worxs), function(id) {
+    wx <- worxs[[id]]
+    message(paste0(id, ". ", wx$name, " - ", wx$api_id))
+  })
 
   range <- paste0(1, "-", max(worx_df$Number))
   worx_id <- read_prompt(paste0("\nPlease select a default workspace (", range, "): "),
