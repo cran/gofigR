@@ -2,7 +2,7 @@
 % Please edit documentation in R/integrations.R
 \name{enable}
 \alias{enable}
-\title{Enables GoFigr support.}
+\title{Enables GoFigr in the current R/Rmd file.}
 \usage{
 enable(
   auto_publish = FALSE,
@@ -14,6 +14,7 @@ enable(
   watermark = QR_WATERMARK,
   verbose = FALSE,
   debug = FALSE,
+  api_key = NULL,
   show = "watermark"
 )
 }
@@ -37,6 +38,8 @@ that setting this option will re-assign plot() and print() in the global environ
 
 \item{debug}{whether to show debugging information}
 
+\item{api_key}{GoFigr API key}
+
 \item{show}{which figure to display in the document: original, watermark, or hide. Note that this setting \
 only affects the display and doesn't change what gets published: e.g. even if you choose to display \
 the original figure, the watermarked version will still be published to GoFigr.}
@@ -45,5 +48,5 @@ the original figure, the watermarked version will still be published to GoFigr.}
 named list of GoFigr options
 }
 \description{
-Enables GoFigr support.
+Enables GoFigr in the current R/Rmd file.
 }

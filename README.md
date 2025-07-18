@@ -1,12 +1,10 @@
 # gofigR
 
-gofigR is the R client for <https://gofigr.io>, a zero-effort reproducibility engine. It works with any R library which outputs to R graphics devices, with automatic publishing for `ggplot`.
+gofigR is the R client for <https://gofigr.io>, a zero-effort reproducibility engine. It works with any R library which outputs to R graphics devices.
 
 ## Compatibility
 
 gofigR integrates with R markdown, both in `knitr` and in interactive sessions in RStudio. GoFigr also works in scripts. We tested with R 4.3.2 but any reasonably recent version should work.
-
-GoFigr will automatically publish all `ggplot` output assuming you call `gofigR::enable(auto_publish=TRUE)`. GoFigr will *not* publish old-style R plots unless you tell it to. See the "Usage" section below.
 
 ## Installation
 
@@ -53,50 +51,37 @@ Configuration saved to /Users/maciej/.gofigr. Happy analysis!
 
 To enable GoFigr, simply call `enable` in your setup chunk. You can also optionally specify an `analysis_name` (it will be created automatically if it doesn't exist).
 
-```` rmd
+```` {.R .rmd}
 ```{r setup, include=FALSE}
 library(gofigR)
-gofigR::enable(auto_publish=TRUE)
+gofigR::enable()
 ```
 ````
 
-`auto_publish` is FALSE by default. Set it to TRUE to override `plot` and `print` and publish figures automatically.
+## Publishing plots
 
-## Automatic output capture
+To publish plots, simply call `publish`:
 
-If `auto_publish` is on, GoFigr will intercept all calls to `plot` and `print` and publish the results if they are from a compatible library. At the moment, we support any graphics format also supported by `ggplotify`:
-
--   ggplot2
-
--   ComplexHeatmap
-
--   cowplot
-
--   patchwork
-
--   lattice
-
-## Manual capture
-
-To capture output manually, simply call `publish`:
-
-``` R
+``` r
 hm1 <- Heatmap(matrix(rnorm(100), nrow=10, ncol=10))
 
 publish(hm1, "Heatmaps are cool!")  # second argument is the figure name
+
+# This works, too
+hm1 %>% publish("Heatmaps are cool!")
 ```
 
 ## Capturing base graphics
 
-To capture output from base R plotting, call `publish_base`:
+To capture output from base R plotting, call `publish` with a plotting expression:
 
-```         
-gofigR::publish_base({
+``` r
+gofigR::publish({
   base::plot(pressure, main="Pressure vs temperature")
   text(200, 50, "Note the non-linear relationship")
 }, data=pressure, figure_name="Pressure vs temperature")
 
-gofigR::publish_base({
+gofigR::publish({
   # The mtcars dataset:
   data <- as.matrix(mtcars)
 
@@ -106,6 +91,59 @@ gofigR::publish_base({
 ```
 
 Note the optional `data` argument following the expression. It specifies the data which you want to associate with the figure -- it will show up under "files" (as `.RDS`) once published.
+
+## Shiny
+
+You can replace `plotOutput + renderPlot` with `gfPlot + gfPlotServer` and give your users the ability to publish interactive plots to GoFigr. For example:
+
+``` r
+library(shiny)
+library(gofigR)
+
+gofigR::enable()
+
+# Define UI for application that draws a histogram
+ui <- fluidPage(
+  # Application title
+  titlePanel("Old Faithful Geyser Data"),
+
+  # Sidebar with a slider input for number of bins
+  sidebarLayout(
+    sidebarPanel(
+      sliderInput("bins",
+                  "Number of bins:",
+                  min = 1,
+                  max = 50,
+                  value = 30)
+    ),
+
+    # Show a plot of the generated distribution
+    mainPanel(
+      gfPlot("distPlot"),
+    )
+  )
+)
+
+# Define server logic required to draw a histogram
+server <- function(input, output) {
+
+  gfPlotServer("distPlot", {
+    # generate bins based on input$bins from ui.R
+    x    <- faithful[, 2]
+    bins <- seq(min(x), max(x), length.out = input$bins + 1)
+
+    # draw the histogram with the specified number of bins
+    hist(x, breaks = bins, col = 'darkgray', border = 'white',
+         xlab = 'Waiting time to next eruption (in mins)',
+         main = 'Histogram of waiting times')
+  }, input, figure_name="Old faithful waiting times")
+}
+
+# Run the application
+shinyApp(ui = ui, server = server)
+```
+
+Note that we pass `input` to `gfPlotServer`. This will capture your current Shiny inputs – they will become available under the "Metadata" tab in GoFigr.
 
 ## Interactive use
 
