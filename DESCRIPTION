@@ -1,7 +1,7 @@
 Package: gofigR
 Type: Package
 Title: Client for 'GoFigr.io'
-Version: 1.1.0
+Version: 1.1.2
 Authors@R: c(
     person(family="Pacula", given="Maciej", email="maciej@gofigr.io", role=c("cre", "aut")),
     person(given="Flagstaff Solutions, LLC", role=c("cph"))
@@ -17,13 +17,13 @@ RoxygenNote: 7.3.2
 Imports: httr, jsonlite, knitr, base64enc, readr, magick, qrcode,
         digest, getPass, scriptName, rstudioapi, rsvg, cowplot,
         ggplotify, shiny, shinyjs
-Suggests: ggplot2, gplots, rmarkdown, withr, purrr, dtt, devtools,
-        uuid, rvest, stringr, torch, torchvision, testthat (>= 3.0.0)
+Suggests: ggplot2, gplots, rmarkdown, withr, purrr, devtools, uuid,
+        rvest, stringr, torch, torchvision, testthat (>= 3.0.0)
 Config/testthat/edition: 3
 NeedsCompilation: no
-Packaged: 2025-07-17 20:15:22 UTC; ubuntu
+Packaged: 2025-07-31 16:04:37 UTC; ubuntu
 Author: Maciej Pacula [cre, aut],
   Flagstaff Solutions, LLC [cph]
 Maintainer: Maciej Pacula <maciej@gofigr.io>
 Repository: CRAN
-Date/Publication: 2025-07-18 13:20:02 UTC
+Date/Publication: 2025-07-31 19:32:04 UTC

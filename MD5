@@ -1,6 +1,6 @@
-aab384fd43b6350f599e70df3a30b755 *DESCRIPTION
+37658e204cfc6b8d0f5c24b59d68e4ac *DESCRIPTION
 c49dcb4ef65f6e4d51bd0a7f0b094fe5 *LICENSE
-9409e64408320ff2167f4ca1c4cfa8d0 *NAMESPACE
+fbb484c1f5bba59177eb607d100c78fe *NAMESPACE
 03e1729969894bfd819cef5373f2d0a1 *NEWS.md
 5ef452f79f7e444a7858f534d611bdd5 *R/analysis.R
 1be6f9e9495b96c6792191154a9b0a87 *R/api.R
@@ -9,7 +9,7 @@ df398379e80ea4a8c25f3d66b0c4d3b3 *R/context.R
 e3c05fca8694654ca0b37e94be22cf1c *R/data.R
 f3a27d82baa8fe1a9479733175da040e *R/figure.R
 87748ba11add7322a50de96b969e40a6 *R/gfconfig.R
-b317f18bfe33140363f39f30b55b581a *R/integrations.R
+87349372248440e607fe67c2f844cd45 *R/integrations.R
 9168d860a61156a25a85666409037866 *R/revision.R
 d3214696c0ee84fe4b673ccd400d0751 *R/shiny_components.R
 c2fe2f3bbb0801677379b1156ceee750 *R/watermark.R
@@ -91,8 +91,15 @@ a9179ddc515222785018b7938d6e514a *man/new_asset_revision_from_file.Rd
 a9aa70ddf05ffab6ea26e0cb5df8a80e *man/print.gofigrdata.Rd
 a44efc617c4bc69c76dca3862c6a0b95 *man/publish.Rd
 aa4de1d8eb5cd8dbb8c6391e47c8ba44 *man/publish_base.Rd
+afe5cb17b5441667654fcd9a467904fe *man/read.csv.Rd
+9561bb488fcb1a47d08c0db241d46a90 *man/read.csv2.Rd
+92161ce3dbd9d2ecc29b269a794e624f *man/read.xlsx.Rd
 b2ec82c168efe563d675f11146a89bdd *man/read_config.Rd
+9158dc5665612b90ac5a68a277f7ed9e *man/read_csv.Rd
+54ebce1ce34894dd5e5e59330a058cf4 *man/read_csv2.Rd
+fa9de69fe3385849e87585b4fb55ec4a *man/read_delim.Rd
 a0ee02bd1f2242a48c491e195f3992ca *man/read_prompt.Rd
+2a03f9a727ea3ccda8fa1027d48437d6 *man/read_tsv.Rd
 aba66157de28a8f81e8e4ebe63f2b966 *man/refresh_jwt.Rd
 4e0bb7293cd973a53e9f664c8125cbde *man/response_to_JSON.Rd
 54b6a7b223d81f024a2401c84dfbaa0a *man/set_options.Rd
@@ -108,6 +115,6 @@ cee50599205e86a6460eab66c75eb743 *man/watermark_generator.Rd
 0726bca5ce7daaeadc6053c991ef81e8 *man/with_isolated_devices.Rd
 36c983fb92810d5728416cdd17d05f72 *tests/testthat.R
 c21a6ee78e1d7f2471dc903f3c38bb7d *tests/testthat/test_data.txt
-99b04e8600cbb7cea3c0ea68406e9489 *tests/testthat/test_integration.R
+efe90fea4e18af770e4b41969ef7dfba *tests/testthat/test_integration.R
 8c26fc76d83beb414cd115d7729a7422 *tests/testthat/testdata/markdown.Rmd
 c21a6ee78e1d7f2471dc903f3c38bb7d *tests/testthat/testdata/test_data.txt
